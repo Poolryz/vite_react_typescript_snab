@@ -38,16 +38,31 @@ const supplyRequests = [
         createdAt: "2023-10-05"
     }
 ]
-
-
-const express = Express
-const app = express()
+const app = Express()
 const port = "3000"
 app.use(cors())
-app.get("/", (req, res) => {
+app.use(Express.json())
+app.get('/requests', (req, res) => {
     res.send(supplyRequests)
 })
-app
+app.get('/requests/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const request = supplyRequests.find(req => req.id === id)
+    if (request) {
+        res.send(request)
+    } else {
+        res.status(404).send({ message: 'Заявка не найдена' })
+    }
+})
+app.post('/requests/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    let requestIndex = supplyRequests.findIndex(req => req.id === id)
+    const body = req.body
+    supplyRequests[requestIndex] = { ...supplyRequests[requestIndex], productName: body.editName, quantity: body.editQuantity, status: body.editStatus }
+    console.log(supplyRequests);
+
+    res.send(body)
+})
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`);
 })

@@ -1,5 +1,6 @@
 import ListRequestComponent from "./components/ListRequestComponent/ListRequestComponent"
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import RequestPage from "./pages/RequestPage/RequestPage"
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/requests' element={<ListRequestComponent />} />
-        <Route path="/requests/:id" element={<h1>hello</h1>} />
+        <Route path="/requests/:id" element={<RequestPage />} />
       </Routes>
     </BrowserRouter>
   )

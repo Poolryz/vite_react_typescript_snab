@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import RequestComponent from "../RequestComponent/RequestComponent"
 
 
 
 export default function ListRequestComponent() {
     const [requests, setRequests] = useState([])
     async function fetchUser() {
-        let response = await fetch('http://localhost:3000/').then(res => res.json())
+        let response = await fetch('http://localhost:3000/requests')
+            .then(res => res.json())
         setRequests(response)
         return response
     }
@@ -19,14 +20,7 @@ export default function ListRequestComponent() {
             <ul className="requests__list">
                 {requests.map((item) => {
                     return (
-                        <Link to={`/requests/${item.id}`}>
-                            <li className="requests__item" key={item.id}>
-                                <h2>{item.productName}</h2>
-                                <h3>{item.quantity}</h3>
-                                <span>{item.status}</span>
-                                <p>{item.createdAt}</p>
-                            </li>
-                        </Link>
+                        <RequestComponent id={item.id} productName={item.productName} quantity={item.quantity} status={item.status} createdAt={item.createdAt} key={item.id} />
                     )
                 })}
             </ul>
